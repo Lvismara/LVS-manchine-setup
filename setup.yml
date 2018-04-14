@@ -1,0 +1,83 @@
+---
+
+- name: teste playbook
+hosts: localhost
+become: yes
+tasks:
+
+- name: install docker
+  apt: docker.io
+  state: latest
+
+- name: install docker-compose
+  apt: docker-compose
+  state: latest
+
+- name: install java
+  apt: default-jre
+  state: latest
+
+- name: install maven
+  apt: maven
+  state: latest
+
+- name: install gdebi
+  apt: gdebi
+  state: latest
+
+- name: install nodejs
+  apt: nodejs
+  state: latest
+
+- name: install Chrome
+
+- name: install mysql
+
+- name: install jenkins docker image
+  docker_container:
+     name: jenkins
+     image: jenkins/jenkins
+     ports:
+       - "8080:8080"
+     volumes:
+       - ~/opt/jenkins_home:/var/jenkins_home
+
+- name: install sonarqube docker image
+  docker_container:
+     name: sonarqube
+     image: sonarqube
+     ports:
+       - "19000:9000"
+
+- name: install nexus docker image
+  docker_container:
+     name: nexus
+     image: sonatype/nexus
+     ports:
+       - "8081:8081"
+
+- name: install gitlab docker image
+  docker_container:
+     name: gitlab
+     image: gitlab/gitlab-ce
+     ports:
+       - "80:80"
+       - "443:443"
+       - "22:22"
+     volumes:
+       - ~/opt/gitlab/etc:/etc/gitlab
+       - ~/opt/gitlab/log:/var/log/gitlab
+       - ~/opt/gitlab/opt:/var/opt/gitlab
+
+- name: install eclipse
+
+- name: install vagrant
+  apt: vagrant
+  state: latest
+
+- name: install virtual box
+
+- name: install androidStudio
+
+- name: install Ansible AWX
+
