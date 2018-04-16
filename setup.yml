@@ -1,83 +1,148 @@
 ---
+- hosts: localhost
+  become: yes
+  tasks:
 
-- name: teste playbook
-hosts: localhost
-become: yes
-tasks:
+   - name: Update
+     command: sudo apt-get update
 
-- name: install docker
-  apt: docker.io
-  state: latest
+   - name: install docker
+     apt: 
+      name: docker.io
+      state: latest
 
-- name: install docker-compose
-  apt: docker-compose
-  state: latest
+   - name: install docker-compose
+     apt: 
+      name: docker-compose
+      state: latest
 
-- name: install java
-  apt: default-jre
-  state: latest
+   - name: install git
+     apt: 
+      name: git
+      state: latest
 
-- name: install maven
-  apt: maven
-  state: latest
+   - name: install phyton
+     apt: 
+      name: python-pip
+      state: latest
 
-- name: install gdebi
-  apt: gdebi
-  state: latest
+   - pip:
+      name: docker-py
+      state: latest
 
-- name: install nodejs
-  apt: nodejs
-  state: latest
+   - name: install java
+     apt: 
+      name: default-jre
+      state: latest
 
-- name: install Chrome
+   - name: install maven
+     apt: 
+      name: maven
+      state: latest
 
-- name: install mysql
+   - name: install gdebi
+     apt: 
+      name: gdebi
+      state: latest
 
-- name: install jenkins docker image
-  docker_container:
-     name: jenkins
-     image: jenkins/jenkins
-     ports:
-       - "8080:8080"
-     volumes:
-       - ~/opt/jenkins_home:/var/jenkins_home
+   - name: install nodejs
+     apt: 
+      name: nodejs-legacy
+      state: latest
+ 
+#   - name: install Atom
+#     command: sudo add-apt-repository ppa:webupd8team/atom
+#     command: sudo apt-get install atom
 
-- name: install sonarqube docker image
-  docker_container:
-     name: sonarqube
-     image: sonarqube
-     ports:
-       - "19000:9000"
+#   - name: install npm
+#     apt: 
+#      name: npm
+#      state: latest
 
-- name: install nexus docker image
-  docker_container:
-     name: nexus
-     image: sonatype/nexus
-     ports:
-       - "8081:8081"
+   - name: install Google Chrome
+     command: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+     command: sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+#     command: sudo apt-get install google-chrome-stable -y
 
-- name: install gitlab docker image
-  docker_container:
-     name: gitlab
-     image: gitlab/gitlab-ce
-     ports:
-       - "80:80"
-       - "443:443"
-       - "22:22"
-     volumes:
-       - ~/opt/gitlab/etc:/etc/gitlab
-       - ~/opt/gitlab/log:/var/log/gitlab
-       - ~/opt/gitlab/opt:/var/opt/gitlab
+   - name: install mysql
+     apt: 
+      name: mysql-server
+      state: latest
+   
+#   - name: config/start mysql
+#     command: sudo mysql_secure_installation
+#     command: sudo mysql_install_db
 
-- name: install eclipse
+   - name: install mysql workbench
+     command: wget http://cdn.mysql.com/Downloads/MySQLGUITools/mysql-workbench-community-6.3.9-1ubuntu16.10-amd64.deb -O mysql-workbench-community.deb
+     command: sudo dpkg -i mysql-workbench-community.deb
+     command: sudo apt-get -f install
 
-- name: install vagrant
-  apt: vagrant
-  state: latest
+   - name: install jenkins docker image
+     docker_container:
+        name: jenkins
+        image: jenkins/jenkins
+        ports:
+          - "8080:8080"
+        volumes:
+          - ~/opt/jenkins_home:/var/jenkins_home
 
-- name: install virtual box
+   - name: install sonarqube docker image
+     docker_container:
+        name: sonarqube
+        image: sonarqube
+        ports:
+          - "19000:9000"
 
-- name: install androidStudio
+   - name: install nexus docker image
+     docker_container:
+        name: nexus
+        image: sonatype/nexus
+        ports:
+          - "8081:8081"
 
-- name: install Ansible AWX
+   - name: install gitlab docker image
+     docker_container:
+        name: gitlab
+        image: gitlab/gitlab-ce
+        ports:
+          - "80:80"
+          - "443:443"
+          - "22:22"
+        volumes:
+          - ~/opt/gitlab/etc:/etc/gitlab
+          - ~/opt/gitlab/log:/var/log/gitlab
+          - ~/opt/gitlab/opt:/var/opt/gitlab
 
+#   - name: install eclipse
+
+   - name: install aws-cli
+     apt: 
+      name: awscli
+      state: latest
+
+   - name: install vagrant
+     apt: 
+      name: vagrant
+      state: latest
+
+   - name: install virtual box
+     apt: 
+      name: virtualbox
+      state: latest      
+ 
+#   - name: install androidStudio
+#     command: sudo apt-add-repository ppa:paolorotolo/android-studio
+#     command: sudo apt-get install android-studio
+
+#   - name: install Ansible AWX
+#      command: mkdir awx
+#      command: cd awx
+#      command: git clone https://github.com/ansible/awx.git
+#      command: cd awx/installer/
+
+   - name: Update
+     command: sudo apt-get update
+
+   - name: upgrade
+     command: sudo apt-get upgrade
