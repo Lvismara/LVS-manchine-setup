@@ -50,10 +50,6 @@
       name: nodejs-legacy
       state: latest
  
-#   - name: install Atom
-#     command: sudo add-apt-repository ppa:webupd8team/atom
-#     command: sudo apt-get install atom
-
 #   - name: install npm
 #     apt: 
 #      name: npm
@@ -135,11 +131,29 @@
 #     command: sudo apt-add-repository ppa:paolorotolo/android-studio
 #     command: sudo apt-get install android-studio
 
-#   - name: install Ansible AWX
-#      command: mkdir awx
-#      command: cd awx
-#      command: git clone https://github.com/ansible/awx.git
-#      command: cd awx/installer/
+   - name: get the Ansible AWX
+     command: mkdir awx
+     command: cd awx
+     command: git clone https://github.com/ansible/awx.git
+     command: cd awx/installer/
+   - name: change the default user of AWX
+     lineinfile:
+      path: ./inventory
+      regexp: '*default_admin_user=*'
+      line: 'default_admin_user=ansibleawx'
+
+   - name: change the default pass of AWX
+     lineinfile:
+      path: ./inventory
+      regexp: '*default_admin_password=*'
+      line: 'default_admin_password=ansibleawx@123#'
+
+   - name: install Ansible AWX
+     command: ansible-playbook install.yml
+
+   - name: install Atom
+     command: sudo add-apt-repository ppa:webupd8team/atom
+     command: sudo apt-get install atom
 
    - name: Update
      command: sudo apt-get update
