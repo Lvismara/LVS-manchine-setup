@@ -47,28 +47,19 @@
 
    - name: install nodejs
      apt: 
-      name: nodejs-legacy
+      name: nodejs
       state: latest
  
-#   - name: install npm
-#     apt: 
-#      name: npm
-#      state: latest
-
    - name: install Google Chrome
      command: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
      command: sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-#     command: sudo apt-get install google-chrome-stable -y
+     command: sudo apt-get install google-chrome-stable -y
 
    - name: install mysql
      apt: 
       name: mysql-server
       state: latest
    
-#   - name: config/start mysql
-#     command: sudo mysql_secure_installation
-#     command: sudo mysql_install_db
-
    - name: install mysql workbench
      command: wget http://cdn.mysql.com/Downloads/MySQLGUITools/mysql-workbench-community-6.3.9-1ubuntu16.10-amd64.deb -O mysql-workbench-community.deb
      command: sudo dpkg -i mysql-workbench-community.deb
@@ -110,7 +101,8 @@
           - ~/opt/gitlab/log:/var/log/gitlab
           - ~/opt/gitlab/opt:/var/opt/gitlab
 
-#   - name: install eclipse
+   - name: install eclipse
+     command: wget http://artfiles.org/eclipse.org//oomph/epp/oxygen/R/eclipse-inst-linux64.tar.gz
 
    - name: install aws-cli
      apt: 
@@ -127,18 +119,18 @@
       name: virtualbox
       state: latest      
  
-#   - name: install androidStudio
-#     command: sudo apt-add-repository ppa:paolorotolo/android-studio
-#     command: sudo apt-get install android-studio
+   - name: install androidStudio
+     command: sudo apt-add-repository ppa:paolorotolo/android-studio
+     command: sudo apt-get install android-studio
 
    - name: get the Ansible AWX
      command: mkdir awx
      command: cd awx
      command: git clone https://github.com/ansible/awx.git
-     command: cd awx/installer/
+    command: cd awx/installer/
    - name: change the default user of AWX
      lineinfile:
-      path: ./inventory
+     path: ./inventory
       regexp: '*default_admin_user=*'
       line: 'default_admin_user=ansibleawx'
 
@@ -150,6 +142,12 @@
 
    - name: install Ansible AWX
      command: ansible-playbook install.yml
+
+   - name: install Visual Studi0 Code
+     command: curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+     command: sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+     command: sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+     command: sudo apt-get install code # or code-insiders
 
    - name: install Atom
      command: sudo add-apt-repository ppa:webupd8team/atom
