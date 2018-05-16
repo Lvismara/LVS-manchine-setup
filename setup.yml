@@ -119,18 +119,20 @@
       name: virtualbox
       state: latest      
  
-#   - name: install androidStudio
-#     command: sudo apt-add-repository ppa:paolorotolo/android-studio
-#    command: sudo apt-get install android-studio
+   - name: install androidStudio
+     command: sudo apt-add-repository ppa:paolorotolo/android-studio
+     command: sudo apt-get update
+     command: sudo apt-get install android-studio
 
    - name: get the Ansible AWX
      command: mkdir awx
      command: cd awx
      command: git clone https://github.com/ansible/awx.git
-    command: cd awx/installer/
+     command: cd awx/installer/
+
    - name: change the default user of AWX
      lineinfile:
-     path: ./inventory
+      path: ./inventory
       regexp: '*default_admin_user=*'
       line: 'default_admin_user=ansibleawx'
 
