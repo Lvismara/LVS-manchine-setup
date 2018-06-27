@@ -53,17 +53,26 @@
    - name: install Google Chrome
      command: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
      command: sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-#     command: sudo apt-get install google-chrome-stable -y
+     command: sudo apt-get install google-chrome-stable -y
 
    - name: install mysql
      apt: 
       name: mysql-server
       state: latest
    
-   - name: install mysql workbench
-     command: wget http://cdn.mysql.com/Downloads/MySQLGUITools/mysql-workbench-community-6.3.9-1ubuntu16.10-amd64.deb -O mysql-workbench-community.deb
-     command: sudo dpkg -i mysql-workbench-community.deb
-     command: sudo apt-get -f install
+   - name: install mysqlworkbench
+     apt: 
+      name: mysql-workbench
+      state: latest
+
+   - name: install MongoDB
+     command: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+     command: echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+     command: sudo apt-get update
+     command: sudo apt-get install -y mongodb-org
+
+   - name: install rocketchat-desktop
+     command: sudo snap install rocketchat-desktop
 
    - name: install jenkins docker image
      docker_container:
@@ -154,6 +163,12 @@
    - name: install Atom
      command: sudo add-apt-repository ppa:webupd8team/atom
      command: sudo apt-get install atom
+
+   - name: install spotify
+     command: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
+     command: echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+     command: sudo apt-get update
+     command: sudo apt-get install spotify-client
 
    - name: Update
      command: sudo apt-get update
