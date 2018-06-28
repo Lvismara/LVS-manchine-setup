@@ -50,11 +50,6 @@
      apt: 
       name: nodejs-legacy
       state: latest
- 
-   - name: install Google Chrome
-     command: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-     command: wait 60
-     command: sudo gdebi ./google-chrome-stable_current_amd64.deb 
 
    - name: install mysql
      apt: 
@@ -128,11 +123,6 @@
      apt: 
       name: virtualbox
       state: latest      
- 
-   - name: install androidStudio
-     command: sudo apt-add-repository ppa:paolorotolo/android-studio
-     command: sudo apt-get update
-     command: sudo apt-get install android-studio
 
    - name: get the Ansible AWX
      command: mkdir awx
